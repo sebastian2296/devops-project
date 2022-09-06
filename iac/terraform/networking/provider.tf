@@ -11,3 +11,8 @@ terraform {
 provider "aws" {
   region = var.aws_region
 }
+
+# Remote State 
+terraform {
+  backend "s3" {}
+}
