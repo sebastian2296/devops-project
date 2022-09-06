@@ -7,10 +7,10 @@
     ```console
     cd terraform/networking
     ```
-- Reemplazar los valores del archivo **backend.conf**:
-    **bucket** es el nombre del bucket donde guardarán el archivo de estado.
+- Reemplazar los valores del archivo **backend.conf**:  
+    **bucket** es el nombre del bucket donde guardarán el archivo de estado.  
     **key** es la ubicación dentro del bucket donde se guardará el archivo de estado. (No es necesario cambiarla)
-    **region** es la región donde está el bucket
+    **region** es la región donde está el bucket  
     **profile** es el nombre del perfil del CLI de AWS. Se puede eliminar este parámetro en caso de solo tener una cuenta de AWS configurada.
 - Inicializar la configuración de terraform usando el comando
     ```console
@@ -41,10 +41,10 @@
     ```console
     cd terraform/app
     ```
-- Reemplazar los valores del archivo **backend.conf**:
-    **bucket** es el nombre del bucket donde guardarán el archivo de estado.
+- Reemplazar los valores del archivo **backend.conf**:  
+    **bucket** es el nombre del bucket donde guardarán el archivo de estado.  
     **key** es la ubicación dentro del bucket donde se guardará el archivo de estado. (No es necesario cambiarla)
-    **region** es la región donde está el bucket
+    **region** es la región donde está el bucket  
     **profile** es el nombre del perfil del CLI de AWS. Se puede eliminar este parámetro en caso de solo tener una cuenta de AWS configurada.
 - Agregar un archivo que se llame **secres.tfvars** donde se van a especificar las variables con valores sensibles.
     ```
@@ -52,9 +52,9 @@
     public_key                  = "ssh-rsa..."
     tf_state_bucket_networking  = "nombre-bucket-tf-state-networking"
     ```
-    **database_password** es la contraseña que escogerán para la base de datos
-    **public_key** es el contenido de la llave pública que se usará para contectarse a las instancias. Dicho contenido se puede conseguir abriendo el archivo con extensión *.pem* o *.pub*
-    **tf_state_bucket_networking** es el bucket donde guardan el estado del módulo de networking
+    **database_password** es la contraseña que escogerán para la base de datos  
+    **public_key** es el contenido de la llave pública que se usará para contectarse a las instancias. Dicho contenido se puede conseguir abriendo el archivo con extensión *.pem* o *.pub*  
+    **tf_state_bucket_networking** es el bucket donde guardan el estado del módulo de networking  
 - Inicializar la configuración de terraform usando el comando
     ```console
     terraform init -backend-config=backend.conf
@@ -63,7 +63,7 @@
     ```console
     terraform plan -var "owner=nombre" -var-file=secrets.tfvars
     ```
-    donde *nombre* puede ser tu nombre o un seudónimo. Esto se usará para identificar los recursos desplegados.
+    donde *nombre* puede ser tu nombre o un seudónimo. Esto se usará para identificar los recursos desplegados.  
     En caso de usar varios perfiles de AWS CLI usar el mismo comando pero especificando el perfil como una variable de entorno
     ```console
     AWS_PROFILE=nombre-perfil terraform plan -var "owner=nombre" -var-file=secrets.tfvars
