@@ -46,7 +46,7 @@
     **key** es la ubicación dentro del bucket donde se guardará el archivo de estado. (No es necesario cambiarla)
     **region** es la región donde está el bucket  
     **profile** es el nombre del perfil del CLI de AWS. Se puede eliminar este parámetro en caso de solo tener una cuenta de AWS configurada.
-- Agregar un archivo que se llame **secres.tfvars** donde se van a especificar las variables con valores sensibles.
+- Agregar un archivo que se llame **secrets.tfvars** donde se van a especificar las variables con valores sensibles.
     ```
     database_password           = "password123"
     public_key                  = "ssh-rsa..."
