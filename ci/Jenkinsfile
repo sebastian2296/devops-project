@@ -14,6 +14,10 @@ node {
         url: 'https://github.com/sebastian2296/devops-project.git']]])
         sh 'ls'
         }
+
+     stage('terraform init'){
+        sh "terraform init"
+     }
     } catch(caughtError) {
         err = caughtError
         currentBuild.result = 'FAILURE'
