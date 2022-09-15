@@ -17,8 +17,15 @@ node {
 
     dir('iac/terraform/networking'){
      stage('terraform init'){
+        withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: "AWS-terraform",
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
         sh "terraform init -reconfigure -backend-config=backend.conf"
-     }
+    }
+
+    }
     }
     } catch(caughtError) {
         err = caughtError
