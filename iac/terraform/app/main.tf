@@ -37,7 +37,7 @@ resource "aws_db_instance" "database" {
 
 # EC2 Instances
 resource "aws_key_pair" "deployer" {
-    key_name   = "${var.owner}"
+    key_name   = "${var.owner}-${random_string.random.result}"
     public_key = var.public_key
 }
 
