@@ -15,9 +15,11 @@ node {
         sh 'ls'
         }
 
+    dir('iac/terraform/networking'){
      stage('terraform init'){
-        sh "terraform init"
+        sh "terraform init -reconfigure -backend-config=backend.conf"
      }
+    }
     } catch(caughtError) {
         err = caughtError
         currentBuild.result = 'FAILURE'
