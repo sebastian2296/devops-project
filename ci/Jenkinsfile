@@ -52,7 +52,7 @@ node {
         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
         // Se efecuta el plan si la rama es main
         when(scmVars.GIT_BRANCH == 'origin/main') {
-            sh "terraform apply"
+            sh """terraform apply -var \"owner=Sebastian\""""
         }
         }
             }
