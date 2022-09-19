@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+@Library('implicit-when')
+
 def err = null
 
 node {
