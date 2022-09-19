@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-@Library('implicit-when')
+@Library('imperative-when')
 
 def err = null
 
