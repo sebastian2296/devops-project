@@ -6,7 +6,7 @@ node {
     // Creamos el try catch para obtener el error si sucede
     try{
         stage('Checkout') {
-        scmVars = checkout scm([
+        scmVars = checkout([
             $class: 'GitSCM', 
             branches: [[name: 'main']], 
             extensions: [], 
