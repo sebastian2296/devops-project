@@ -51,6 +51,13 @@ node {
             sh "terraform apply"
         }
             }
+
+        stage('Terraform destroy') {
+        // Se efecuta el plan si la rama es main
+        when(scmVars.GIT_BRANCH == 'origin/main') {
+            sh "terraform destroy"
+        }
+            }
         }
     }
     } catch(caughtError) {
