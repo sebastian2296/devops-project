@@ -32,9 +32,6 @@ node {
         sh "terraform fmt"
         sh "terraform validate"
             }
-        stage('SonarQube') {
-            sh 'sonar-scanner'
-            }
 
         stage('terraform plan') {
         withCredentials([[
