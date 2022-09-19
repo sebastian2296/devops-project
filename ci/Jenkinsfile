@@ -5,29 +5,53 @@ def err = null
 node {
     // Creamos el try catch para obtener el error si sucede
     try{
-     stage('checkout'){
-        checkout(
-        [$class: 'GitSCM', 
-        branches: [[name: '*/main']], 
-        extensions: [], 
-        userRemoteConfigs: [[credentialsId: 'github_token',
-        url: 'https://github.com/sebastian2296/devops-project.git']]])
-        sh 'ls'
+        stage('Checkout') {
+        scmVars = checkout scm([
+            $class: 'GitSCM', 
+            branches: [[name: 'main']], 
+            extensions: [], 
+            userRemoteConfigs: [[
+                credentialsId: 'git-credentials', 
+                url: 'https://github.com/sebastian2296/devops-project.git'
+            ]]
+        ])
         }
 
     dir('iac/terraform/networking'){
+        stage('terraform init'){
         withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
         credentialsId: "AWS-terraform",
         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {      
-        stage('terraform init') {
             sh "terraform init -reconfigure -backend-config=backend.conf"
-        }
+                }
+            }
+    
+        stage('Terraform Validate') {
+        sh "terraform fmt"
+        sh "terraform validate"
+            }
+        stage('SonarQube') {
+            sh 'sonar-scanner'
+            }
+
         stage('terraform plan') {
-            sh """terraform plan -var \"owner=Sebastian\" """
+        withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: "AWS-terraform",
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+        sh """terraform plan -var \"owner=Sebastian\" -out=tfplan"""
         }
-    }
+            }
+        stage('Terraform apply') {
+        // Se efecuta el plan si la rama es main
+        when(scmVars.GIT_BRANCH == 'origin/main') {
+            sh "terraform apply"
+        }
+            }
+        }
     }
     } catch(caughtError) {
         err = caughtError
