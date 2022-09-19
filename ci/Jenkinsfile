@@ -4,7 +4,7 @@
 
 def err = null
 
-node {
+node ('terraform||ec2') {
     // Creamos el try catch para obtener el error si sucede
     try{
         stage('Checkout') {
