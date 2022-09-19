@@ -45,16 +45,28 @@ node {
         }
             }
         stage('Terraform apply') {
+            withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: "AWS-terraform",
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
         // Se efecuta el plan si la rama es main
         when(scmVars.GIT_BRANCH == 'origin/main') {
             sh "terraform apply"
         }
+        }
             }
 
         stage('Terraform destroy') {
+            withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: "AWS-terraform",
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
         // Se efecuta el plan si la rama es main
         when(scmVars.GIT_BRANCH == 'origin/main') {
             sh "terraform destroy"
+        }
         }
             }
         }
