@@ -59,7 +59,6 @@ node {
         }
             }
         }
-    }
     } catch(caughtError) {
         err = caughtError
         currentBuild.result = 'FAILURE'
