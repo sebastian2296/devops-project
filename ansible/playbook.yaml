@@ -1,0 +1,9 @@
+# the file starting with '-' indicates that the following is of type key, value
+- name: "validate yaml syntaxis"
+  hosts: localhost
+  vars: 
+    HOLA_MUNDO: "Hello World"
+
+  tasks:
+    - debug:
+        var: HOLA_MUNDO
